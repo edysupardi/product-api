@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Variety } from 'src/variety/variety.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Product {
@@ -14,7 +21,8 @@ export class Product {
   @Column('decimal', { precision: 10, scale: 2 })
   price: number;
 
-  @Column()
+  @ManyToOne(() => Variety, (variety) => variety.products)
+  @JoinColumn({ name: 'variety_id' })
   variety: string;
 
   @Column({ type: 'float', default: 0 })
