@@ -1,20 +1,23 @@
-# Gunakan node.js sebagai base image
-FROM node:18
+# Gunakan Node.js sebagai base image
+FROM node:18-alpine
 
-# Set direktori kerja di dalam container
+# Tentukan working directory
 WORKDIR /app
 
-# Salin file package.json dan package-lock.json ke dalam container
-COPY package*.json ./
+# Salin package.json dan package-lock.json
+# COPY package*.json ./
 
-# Install dependency aplikasi
+# Install dependencies
+
+# Salin seluruh project ke container
+COPY . .
 RUN npm install
 
-# Salin semua file proyek ke dalam container
-COPY . .
+# Build aplikasi
+# RUN npm run build
 
-# Ekspos port aplikasi (Default nestjs port 3000)
-EXPOSE 3000
+# Expose port aplikasi
+EXPOSE 3001
 
 # Jalankan aplikasi
 CMD ["npm", "run", "start:dev"]

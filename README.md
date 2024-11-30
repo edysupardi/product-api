@@ -1,27 +1,3 @@
-Building steps
-- membuat project dengan nest cli `nest new product-api`
-- masuk ke dalam folder project `cd product-api`
-- install dependency database yang menggunakan mysql `npm install @nestjs/typeorm typeorm mysql2`
-- install juga class validator dan transformer `npm install class-validator class-transformer`
-- buat module product `nest generate module product`
-- buat controller product `nest generate controller product`
-- buat service product `nest generate service product`
-sehingga struktur folder menjadi:
-src/
- ├── product/
- │    ├── product.module.ts
- │    ├── product.controller.ts
- │    ├── product.service.ts
-
-- lanjut membuat entity untuk table product di folder `src/product/product.entity.ts`
-- konfigurasi database di file `src/app.module.ts`
-- menambahkan repository untuk module product `src/product/product.module.ts`
-- implementasikan service product
-- hubungkan controller ke service
-
-
-
-
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>

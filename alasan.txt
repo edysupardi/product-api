@@ -1,6 +1,0 @@
-1. alasan milih javascript (nestjs)
-    karena proyek yang simple dan tim kecil serta butuh pengembangan yang cepat, tech stack yang kepilih adalah nestjs karena pengembangannya yang cepet dan simple, serta dengan framework nestjs memudahkan membuat fungsi-fungsi simple
-
-2. alasan pilih npm ketimbang yarn
-    npm: Cocok untuk mayoritas proyek karena kini sangat stabil dan cepat. dan secara pribadi lebih biasa pake npm 
-

@@ -1,34 +1,43 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Product } from './product.entity';
 import { Repository } from 'typeorm';
+import { Product } from './entities/product.entity';
 
 @Injectable()
 export class ProductService {
   constructor(
     @InjectRepository(Product)
-    private productRepository: Repository<Product>,
+    private readonly productRepository: Repository<Product>,
   ) {}
 
-  async findAll(): Promise<Product[]> {
-    return this.productRepository.find();
+  async findAll() {
+    return await this.productRepository.find({
+      where: { deletedAt: null },
+      relations: ['variety', 'createdBy', 'updatedBy'],
+    });
   }
 
-  async findOne(id: number): Promise<Product> {
-    return this.productRepository.findOne({ where: { id } });
+  async findOne(id: number) {
+    return await this.productRepository.findOne({
+      where: { id, deletedAt: null },
+      relations: ['variety', 'createdBy', 'updatedBy'],
+    });
   }
 
-  async create(product: Partial<Product>): Promise<Product> {
-    const newProduct = this.productRepository.create(product);
-    return this.productRepository.save(newProduct);
+  async create(productData: Partial<Product>) {
+    const product = this.productRepository.create(productData);
+    return await this.productRepository.save(product);
   }
 
-  async update(id: number, product: Partial<Product>): Promise<Product> {
-    await this.productRepository.update(id, product);
-    return this.findOne(id);
+  async update(id: number, productData: Partial<Product>) {
+    await this.productRepository.update(id, productData);
+    return await this.findOne(id);
   }
 
-  async delete(id: number): Promise<void> {
-    await this.productRepository.delete(id);
+  async softDelete(id: number, deletedBy: number) {
+    return await this.productRepository.update(id, {
+      deletedAt: new Date(),
+      deletedBy: { id: deletedBy }, // Relasi ke User
+    });
   }
 }

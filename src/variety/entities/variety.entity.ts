@@ -1,6 +1,7 @@
-import { Product } from 'src/product/product.entity';
-import { Column, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Product } from 'src/product/entities/product.entity';
 
+@Entity()
 export class Variety {
   @PrimaryGeneratedColumn()
   id: number;
