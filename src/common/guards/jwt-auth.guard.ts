@@ -32,7 +32,7 @@ export class JwtAuthGuard implements CanActivate {
 
       // Ambil user dari database menggunakan userId dari payload
       const user = await this.userService.findOne(payload.id);
-
+      
       if (!user) {
         return false; // User tidak ditemukan
       }

@@ -10,9 +10,8 @@ import {
 import { Variety } from 'src/variety/entities/variety.entity';
 import { User } from 'src/user/entities/user.entity';
 import { Rating } from 'src/rating/entities/rating.entity';
-// import { Exclude } from 'class-transformer';
 
-@Entity()
+@Entity({synchronize: false})
 export class Product {
   @PrimaryGeneratedColumn()
   id: number;
@@ -26,25 +25,32 @@ export class Product {
   @Column('decimal')
   price: number;
 
-  @Column({ nullable: true })
-  @DeleteDateColumn({ select: false }) // Exclude this field from SELECT queries
-  deletedAt: Date;
-
   @ManyToOne(() => Variety, (variety) => variety.products)
   @JoinColumn({ name: 'variety_id' })
   variety: Variety;
 
+  @Column({ nullable: false})
+  createdAt: Date;
+  
+  @Column({ type: 'int', nullable: false})
   @ManyToOne(() => User)
   @JoinColumn({ name: 'created_by' })
   createdBy: User;
 
+  @Column({ nullable: false })
+  updatedAt: Date;
+
+  @Column({ type: 'int', nullable: false })
   @ManyToOne(() => User)
   @JoinColumn({ name: 'updated_by' })
   updatedBy: User;
 
+  @Column({ nullable: true, select: false })
+  deletedAt: Date;
+
   @ManyToOne(() => User)
   @JoinColumn({ name: 'deleted_by' })
-  @DeleteDateColumn({ select: false }) // Exclude this field from SELECT queries
+  @Column({ type: 'int', nullable: true, select: false }) // Exclude this field from SELECT queries
   deletedBy: User;
 
   @OneToMany(() => Rating, (rating) => rating.user)

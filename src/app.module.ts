@@ -37,10 +37,8 @@ import { JwtModule } from '@nestjs/jwt';
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
       autoLoadEntities: true,
-      synchronize: process.env.NODE_ENV !== 'production', // Jangan gunakan di production
+      synchronize: false, // Jangan gunakan di production
       entities: [User, Role, Variety, Product, Rating], // Memastikan semua entitas dimuat
-      // entities: [join(__dirname, '/../**/*.entity.{js,ts}')],
-      // logging: true, // aktifkan loggin
       extra: {
         connectTimeout: 10000, // Tambahkan timeout jika koneksi lama
       },
@@ -85,10 +83,10 @@ export class AppModule implements OnModuleInit {
   async onModuleInit() {
     // Eksekusi seeder di sini
     console.log('Seeding data...');
-    await this.roleSeeder.seed();
-    await this.userSeeder.seed();
-    await this.varietySeeder.seed();
-    await this.productSeeder.seed();
+    // await this.roleSeeder.seed();
+    // await this.userSeeder.seed();
+    // await this.varietySeeder.seed();
+    // await this.productSeeder.seed();
     console.log('Seeding selesai.');
   }
 }
