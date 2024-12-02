@@ -29,8 +29,6 @@ export class JwtAuthGuard implements CanActivate {
 
     try {
       const payload: JwtPayload = this.jwtService.verify(token);
-      // request.user = payload; // Menyimpan data pengguna yang sudah terverifikasi ke dalam request
-      // console.log(payload);
 
       // Ambil user dari database menggunakan userId dari payload
       const user = await this.userService.findOne(payload.id);
