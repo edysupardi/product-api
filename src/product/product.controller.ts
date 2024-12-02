@@ -7,6 +7,8 @@ import {
   Param,
   Body,
   UseGuards,
+  Request,
+  Query,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { Roles } from 'src/common/decorators/roles.decorator';
@@ -20,8 +22,22 @@ export class ProductController {
 
   @Get()
   @Roles('admin', 'user')
-  findAll() {
-    return this.productService.findAll();
+  findAll(
+    @Query('limit') limit: string,
+    @Query('offset') offset: string,
+    @Query('sort') sort: string,
+    @Query('order') order: 'ASC' | 'DESC',
+  ) {
+    const limitValue = limit ? parseInt(limit, 10) : 10; // Default limit to 10
+    const offsetValue = offset ? parseInt(offset, 10) : 0; // Default offset to 0
+    const sortField = sort || 'id'; // Default sort field
+    const orderDirection = order === 'DESC' ? 'DESC' : 'ASC'; // Default order direction
+    return this.productService.findAll(
+      limitValue,
+      offsetValue,
+      sortField,
+      orderDirection,
+    );
   }
 
   @Get(':id')
@@ -32,19 +48,23 @@ export class ProductController {
 
   @Post()
   @Roles('admin')
-  create(@Body() productData: any) {
-    return this.productService.create(productData);
+  create(@Body() productData: any, @Request() request) {
+    return this.productService.create(productData, request);
   }
 
   @Patch(':id')
   @Roles('admin')
-  update(@Param('id') id: number, @Body() productData: any) {
-    return this.productService.update(+id, productData);
+  update(
+    @Param('id') id: number,
+    @Body() productData: any,
+    @Request() request,
+  ) {
+    return this.productService.update(+id, productData, request);
   }
 
   @Delete(':id')
   @Roles('admin')
-  softDelete(@Param('id') id: number, @Body('deletedBy') deletedBy: number) {
-    return this.productService.softDelete(+id, deletedBy);
+  softDelete(@Param('id') id: number, @Request() request) {
+    return this.productService.softDelete(+id, request);
   }
 }

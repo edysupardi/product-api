@@ -5,13 +5,12 @@ import {
   ManyToOne,
   JoinColumn,
   OneToMany,
-  DeleteDateColumn,
 } from 'typeorm';
 import { Variety } from 'src/variety/entities/variety.entity';
 import { User } from 'src/user/entities/user.entity';
 import { Rating } from 'src/rating/entities/rating.entity';
 
-@Entity({synchronize: false})
+@Entity({ synchronize: false })
 export class Product {
   @PrimaryGeneratedColumn()
   id: number;
@@ -29,29 +28,37 @@ export class Product {
   @JoinColumn({ name: 'variety_id' })
   variety: Variety;
 
-  @Column({ nullable: false})
+  @Column({ name: 'created_at', type: 'timestamp', nullable: false })
   createdAt: Date;
-  
-  @Column({ type: 'int', nullable: false})
+
+  @Column({ name: 'created_by', type: 'int', nullable: false })
   @ManyToOne(() => User)
   @JoinColumn({ name: 'created_by' })
   createdBy: User;
 
-  @Column({ nullable: false })
+  @Column({ name: 'updated_at', type: 'timestamp', nullable: false })
   updatedAt: Date;
 
-  @Column({ type: 'int', nullable: false })
+  @Column({ name: 'updated_by', type: 'int', nullable: false })
   @ManyToOne(() => User)
   @JoinColumn({ name: 'updated_by' })
   updatedBy: User;
 
-  @Column({ nullable: true, select: false })
+  @Column({
+    name: 'deleted_at',
+    type: 'timestamp',
+    nullable: true,
+    select: false,
+  })
   deletedAt: Date;
 
   @ManyToOne(() => User)
   @JoinColumn({ name: 'deleted_by' })
-  @Column({ type: 'int', nullable: true, select: false }) // Exclude this field from SELECT queries
+  @Column({ name: 'deleted_by', type: 'int', nullable: true, select: false }) // Exclude this field from SELECT queries
   deletedBy: User;
+
+  @Column({ type: 'decimal', precision: 2, scale: 1, default: 0 })
+  rating: number; // Rating dengan nilai desimal
 
   @OneToMany(() => Rating, (rating) => rating.user)
   ratings: Rating[]; // Relasi satu-ke-banyak dengan Rating

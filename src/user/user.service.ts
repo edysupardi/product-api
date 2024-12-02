@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Request } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
@@ -22,12 +22,15 @@ export class UserService {
   }
 
   async findAll() {
-    return await this.userRepository.find({ relations: ['role'] });
+    return await this.userRepository.find({
+      where: { deletedAt: null },
+      relations: ['role'],
+    });
   }
 
   async findOne(id: number) {
     const user = await this.userRepository.findOne({
-      where: { id },
+      where: { id, deletedAt: null },
       relations: ['role'],
     });
 
@@ -41,7 +44,7 @@ export class UserService {
 
   async findOneByUsername(username: string) {
     return await this.userRepository.findOne({
-      where: { username },
+      where: { username, deletedAt: null },
       relations: ['role'],
     });
   }
@@ -98,7 +101,12 @@ export class UserService {
     return await this.userRepository.save(userToUpdate);
   }
 
-  async delete(id: number) {
-    return await this.userRepository.delete(id);
+  async delete(id: number, @Request() request) {
+    const userId = request.user.id;
+    // return await this.userRepository.delete(id);
+    return await this.userRepository.update(id, {
+      deletedAt: new Date(),
+      deletedBy: userId, // Relasi ke User
+    });
   }
 }
