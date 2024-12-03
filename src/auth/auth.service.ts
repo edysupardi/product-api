@@ -15,7 +15,7 @@ export class AuthService {
 
   async login(loginDto: LoginDto, res: Response) {
     // Verifikasi kredensial user
-    const user = await this.userService.findOneByUsername(loginDto.username);
+    const user = await this.userService.findOneByUsernameForLogin(loginDto.username);
     if (!user) {
       res.status(401).json({
         status: false,
@@ -23,6 +23,8 @@ export class AuthService {
       });
       return;
     }
+    console.log('input password', loginDto.password)
+    console.log('user password', user.password)
 
     const isPasswordValid = await bcrypt.compare(
       loginDto.password,

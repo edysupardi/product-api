@@ -42,11 +42,13 @@ export class UserService {
     return user;
   }
 
-  async findOneByUsername(username: string) {
-    return await this.userRepository.findOne({
-      where: { username, deletedAt: null },
-      relations: ['role'],
-    });
+  async findOneByUsernameForLogin(username: string) {
+    return await this.userRepository
+      .createQueryBuilder('user')
+      .select(['user.id', 'user.username', 'user.password']) // Ambil password di sini
+      .where('user.username = :username', { username: username })
+      .getOne();
+
   }
 
   async create(createUserDto: CreateUserDto) {
