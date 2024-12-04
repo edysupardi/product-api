@@ -2,7 +2,7 @@ import {
   Controller,
   Get,
   Post,
-  Patch,
+  Put,
   Delete,
   Param,
   Body,
@@ -11,9 +11,10 @@ import {
 import { RoleService } from './role.service';
 import { Roles } from 'src/common/decorators/roles.decorator';
 import { RoleGuard } from 'src/common/guards/role.guard';
+import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 
 @Controller('roles')
-@UseGuards(RoleGuard)
+@UseGuards(JwtAuthGuard, RoleGuard)
 export class RoleController {
   constructor(private readonly roleService: RoleService) {}
 
@@ -35,7 +36,7 @@ export class RoleController {
     return this.roleService.create(roleData);
   }
 
-  @Patch(':id')
+  @Put(':id')
   @Roles('admin')
   update(@Param('id') id: number, @Body() roleData: any) {
     return this.roleService.update(+id, roleData);

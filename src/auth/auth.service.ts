@@ -23,8 +23,6 @@ export class AuthService {
       });
       return;
     }
-    console.log('input password', loginDto.password)
-    console.log('user password', user.password)
 
     const isPasswordValid = await bcrypt.compare(
       loginDto.password,
@@ -32,7 +30,7 @@ export class AuthService {
     );
     if (!isPasswordValid) {
       res.status(401).json({
-        status: false,
+        status: 'failed',
         message: 'Invalid Credential', // Custom message for invalid login
       });
       return;
@@ -59,7 +57,7 @@ export class AuthService {
         expires: expires, // Mengatur expired date ke 0 untuk menghapus cookie
       })
       .json({
-        status: true,
+        status: 'success',
         message: 'Welcome',
         data: {
           access_token: token,

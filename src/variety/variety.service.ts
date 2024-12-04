@@ -10,8 +10,19 @@ export class VarietyService {
     private readonly varietyRepository: Repository<Variety>,
   ) {}
 
-  async findAll() {
-    return await this.varietyRepository.find();
+  async findAll(
+    limit: number,
+    offset: number,
+    sort: string,
+    order: 'ASC' | 'DESC',
+  ) {
+    return await this.varietyRepository.find({
+      take: limit,
+      skip: offset,
+      order: {
+        [sort]: order, // Mengatur pengurutan berdasarkan field dan arah
+      },
+    });
   }
 
   async findOne(id: number) {

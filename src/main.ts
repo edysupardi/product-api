@@ -2,6 +2,8 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
+import { ResponseFormatInterceptor } from './common/interceptors/response-format.interceptor'; // Import interceptor
+import { Reflector } from '@nestjs/core'; // Import Reflector
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -23,6 +25,7 @@ async function bootstrap() {
 
   // Menerapkan rate limiter secara global
   app.use(limiter);
+  app.useGlobalInterceptors(new ResponseFormatInterceptor(new Reflector));
 
   await app.listen(PORT, () => {
     console.log(`

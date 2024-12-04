@@ -2,7 +2,7 @@ import {
   Controller,
   Get,
   Post,
-  Patch,
+  Put,
   Delete,
   Param,
   Body,
@@ -38,7 +38,7 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
-  @Patch(':id')
+  @Put(':id')
   @Roles('admin')
   update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(+id, updateUserDto);

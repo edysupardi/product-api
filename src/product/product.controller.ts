@@ -2,13 +2,13 @@ import {
   Controller,
   Get,
   Post,
-  Patch,
   Delete,
   Param,
   Body,
   UseGuards,
   Request,
   Query,
+  Put,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { Roles } from 'src/common/decorators/roles.decorator';
@@ -31,7 +31,7 @@ export class ProductController {
     const limitValue = limit ? parseInt(limit, 10) : 10; // Default limit to 10
     const offsetValue = offset ? parseInt(offset, 10) : 0; // Default offset to 0
     const sortField = sort || 'id'; // Default sort field
-    const orderDirection = order === 'DESC' ? 'DESC' : 'ASC'; // Default order direction
+    const orderDirection = order.toUpperCase() === 'DESC' ? 'DESC' : 'ASC'; // Default order direction
     return this.productService.findAll(
       limitValue,
       offsetValue,
@@ -52,7 +52,7 @@ export class ProductController {
     return this.productService.create(productData, request);
   }
 
-  @Patch(':id')
+  @Put(':id')
   @Roles('admin')
   update(
     @Param('id') id: number,
