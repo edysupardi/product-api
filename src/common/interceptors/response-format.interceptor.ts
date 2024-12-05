@@ -24,10 +24,15 @@ export class ResponseFormatInterceptor<T> implements NestInterceptor {
         message: customMessage || 'Ok!', // Gunakan custom message jika ada
         data,
       })),
-      catchError((error: HttpException) => {
+      catchError((error: any) => {
+        const response = error.getResponse();
+        const status = error.getStatus();
+        const message = typeof response === 'object' && 'message' in response ? response['message'] : response;
+
         return throwError(() => ({
           status: 'error',
-          message: error.message,
+          message: message,
+          statusCode: status,
         }));
       }),
     );

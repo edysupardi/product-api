@@ -5,6 +5,7 @@ import {
   ManyToOne,
   JoinColumn,
   OneToMany,
+  DeleteDateColumn,
 } from 'typeorm';
 import { Role } from 'src/role/entities/role.entity';
 import { Rating } from 'src/rating/entities/rating.entity';
@@ -25,12 +26,12 @@ export class User {
   @JoinColumn({ name: 'role_id' })
   role: Role;
 
-  @Column({ nullable: true, select: false })
+  @DeleteDateColumn({ nullable: true, select: false, name: 'deleted_at', type: 'timestamp' })
   deletedAt: Date;
 
   @ManyToOne(() => User)
   @JoinColumn({ name: 'deleted_by' })
-  @Column({ type: 'int', nullable: true, select: false }) // Exclude this field from SELECT queries
+  @Column({ type: 'int', nullable: true, select: false, name: 'deleted_by' }) // Exclude this field from SELECT queries
   deletedBy: User;
 
   @OneToMany(() => Rating, (rating) => rating.user)

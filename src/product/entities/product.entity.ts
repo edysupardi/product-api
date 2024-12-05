@@ -5,6 +5,7 @@ import {
   ManyToOne,
   JoinColumn,
   OneToMany,
+  DeleteDateColumn,
 } from 'typeorm';
 import { Variety } from 'src/variety/entities/variety.entity';
 import { User } from 'src/user/entities/user.entity';
@@ -44,12 +45,7 @@ export class Product {
   @JoinColumn({ name: 'updated_by' })
   updatedBy: User;
 
-  @Column({
-    name: 'deleted_at',
-    type: 'timestamp',
-    nullable: true,
-    select: false,
-  })
+  @DeleteDateColumn({ name: 'deleted_at', type: 'timestamp', nullable: true, select: false, })
   deletedAt: Date;
 
   @ManyToOne(() => User)
@@ -60,6 +56,7 @@ export class Product {
   @Column({ type: 'decimal', precision: 2, scale: 1, default: 0 })
   rating: number; // Rating dengan nilai desimal
 
-  @OneToMany(() => Rating, (rating) => rating.user)
+  @OneToMany(() => Rating, (ratings) => ratings.product)
+  // @JoinColumn({ name: 'product_id' })
   ratings: Rating[]; // Relasi satu-ke-banyak dengan Rating
 }

@@ -18,7 +18,7 @@ export class ProductService {
     order: 'ASC' | 'DESC',
   ): Promise<Product[]> {
     return await this.productRepository.find({
-      where: { deletedAt: null },
+      withDeleted: false,
       relations: ['variety', 'createdBy', 'updatedBy'],
       take: limit,
       skip: offset,
@@ -30,7 +30,8 @@ export class ProductService {
 
   async findOne(id: number) {
     return await this.productRepository.findOne({
-      where: { id, deletedAt: null },
+      where: { id },
+      withDeleted: false,
       relations: ['variety', 'createdBy', 'updatedBy'],
     });
   }

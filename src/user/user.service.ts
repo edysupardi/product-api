@@ -23,14 +23,15 @@ export class UserService {
 
   async findAll() {
     return await this.userRepository.find({
-      where: { deletedAt: null },
+      withDeleted: false,
       relations: ['role'],
     });
   }
 
   async findOne(id: number) {
     const user = await this.userRepository.findOne({
-      where: { id, deletedAt: null },
+      where: { id },
+      withDeleted: false,
       relations: ['role'],
     });
 
@@ -105,7 +106,6 @@ export class UserService {
 
   async delete(id: number, @Request() request) {
     const userId = request.user.id;
-    // return await this.userRepository.delete(id);
     return await this.userRepository.update(id, {
       deletedAt: new Date(),
       deletedBy: userId, // Relasi ke User

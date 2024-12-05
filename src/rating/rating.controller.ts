@@ -11,9 +11,9 @@ export class RatingController {
 
   @Post()
   @Roles('user')
-  async create(@Req() req, @Body() body: { productId: number; value: number }) {
+  async create(@Req() req, @Body() body: { product_id: number; value: number }) {
     const userId = req.user.id; // Ambil ID user dari JWT
-    const { productId, value } = body;
-    return await this.ratingService.addRating(userId, productId, value);
+    const { product_id, value } = body;
+    return await this.ratingService.addRating(userId, product_id, value);
   }
 }
