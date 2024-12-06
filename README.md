@@ -48,6 +48,16 @@ The application implements several security measures to protect user data and en
 
 Once the application is running, you can access the API through the provided endpoints. Make sure to use tools like Postman or curl to test the available endpoints.
 
+## Documentation
+
+The API documentation is derived from the Postman collection. It provides detailed information about the available endpoints, request and response formats, and examples of how to use the API. You can import the Postman collection into your Postman application to explore the API interactively.
+
+To access the documentation:
+1. Open Postman.
+2. Import the provided Postman [Postman Collection](./docs/product-api.postman_collection.json). (Optional [Dev Environment](./docs/product-dev.postman_environment.json))
+3. Explore the endpoints and their respective details.
+
+
 ## Contributing
 
 If you would like to contribute to this project, please feel free to create a pull request or open an issue for further discussion.
