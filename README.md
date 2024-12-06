@@ -23,6 +23,7 @@ This project is a product and rating management application built using TypeScri
   - **Dependency Injection**: This pattern allows for better management of dependencies, promoting loose coupling and easier testing.
   - **Module Pattern**: Organizes related components, services, and controllers into cohesive modules, enhancing code organization and reusability.
   - **Controller-Service Pattern**: Separates the handling of HTTP requests (controllers) from the business logic (services), promoting a clean architecture and single responsibility principle.
+
 ## Security
 
 The application implements several security measures to protect user data and ensure secure authentication:
@@ -50,6 +51,12 @@ Once the application is running, you can access the API through the provided end
 
 ## Documentation
 
+### Database structure
+
+The database structure is designed to support the application's functionality using PostgreSQL as the relational database management system.
+![Database Structure Diagram](./docs/db-structure.png)
+
+### Postman Collection
 The API documentation is derived from the Postman collection. It provides detailed information about the available endpoints, request and response formats, and examples of how to use the API. You can import the Postman collection into your Postman application to explore the API interactively.
 
 To access the documentation:
