@@ -14,10 +14,11 @@ COPY . .
 RUN npm install
 
 # Build aplikasi
-# RUN npm run build
+RUN npm run build
 
 # Expose port aplikasi
 EXPOSE 3001
 
 # Jalankan aplikasi
-CMD ["npm", "run", "start:dev"]
+# CMD ["npm", "run", "start:dev"]
+CMD ["node", "dist/main.js"]

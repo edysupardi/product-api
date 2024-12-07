@@ -3,7 +3,7 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - main  # Ganti dengan nama branch yang Anda gunakan
+      - master
 
 jobs:
   build:
@@ -24,6 +24,26 @@ jobs:
       - name: Run tests
         run: npm test
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build Docker image
+        run: |
+          docker build -t edysupardi18/product-api:latest .
+
+      - name: Push Docker image
+        run: |
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+          docker push edysupardi18/product-api:latest
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
       - name: Deploy to VPS
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -32,5 +52,13 @@ jobs:
         run: |
           echo "$SSH_PRIVATE_KEY" > private_key
           chmod 600 private_key
-          scp -i private_key -r ./* $VPS_USER@$VPS_HOST:/path/to/your/project
-          ssh -i private_key $VPS_USER@$VPS_HOST "cd /path/to/your/project && npm install && npm run build && pm2 restart your-app"
+          ssh -i private_key $VPS_USER@$VPS_HOST << 'EOF'
+            # Tarik image terbaru
+            docker pull edysupardi18/product-api:latest
+            
+            # Hentikan dan hapus container yang sedang berjalan
+            docker-compose down
+            
+            # Jalankan docker-compose untuk memulai aplikasi
+            docker-compose up -d
+          EOF
