@@ -31,7 +31,7 @@ describe('AuthController', () => {
 
   describe('login', () => {
     it('should call authService.login and send response', async () => {
-      const loginDto: LoginDto = { username: 'testuser', password: 'testpass' };
+      const loginDto: LoginDto = { username: 'useradmin', password: 'sB5VC84uZ|6h' };
       mockAuthService.login = jest.fn().mockResolvedValue(undefined); // Mocking login method
 
       await authController.login(loginDto, response);
