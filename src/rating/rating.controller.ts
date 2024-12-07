@@ -1,8 +1,8 @@
 import { Controller, Post, Body, UseGuards, Req } from '@nestjs/common';
 import { RatingService } from './rating.service';
-import { Roles } from 'src/common/decorators/roles.decorator';
-import { RoleGuard } from 'src/common/guards/role.guard';
-import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
+import { Roles } from '../common/decorators/roles.decorator';
+import { RoleGuard } from '../common/guards/role.guard';
+import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 
 @Controller('ratings')
 @UseGuards(JwtAuthGuard, RoleGuard)

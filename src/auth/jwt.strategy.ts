@@ -3,7 +3,7 @@ import { PassportStrategy } from '@nestjs/passport'; // Import PassportStrategy,
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { JwtPayload } from './jwt-payload.interface'; // Pastikan interface ini ada dan benar
 import { UserService } from '../user/user.service';
-import { User } from 'src/user/entities/user.entity';
+import { User } from '../user/entities/user.entity';
 // import { User } from '../user/user.entity';  // Import model User
 
 @Injectable()

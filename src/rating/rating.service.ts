@@ -2,8 +2,8 @@ import { Injectable, InternalServerErrorException, NotFoundException } from '@ne
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Rating } from './entities/rating.entity';
-import { Product } from 'src/product/entities/product.entity';
-import { User } from 'src/user/entities/user.entity';
+import { Product } from '../product/entities/product.entity';
+import { User } from '../user/entities/user.entity';
 
 @Injectable()
 export class RatingService {

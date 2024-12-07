@@ -7,9 +7,9 @@ import {
   OneToMany,
   DeleteDateColumn,
 } from 'typeorm';
-import { Variety } from 'src/variety/entities/variety.entity';
-import { User } from 'src/user/entities/user.entity';
-import { Rating } from 'src/rating/entities/rating.entity';
+import { Variety } from '../../variety/entities/variety.entity';
+import { User } from '../../user/entities/user.entity';
+import { Rating } from '../../rating/entities/rating.entity';
 
 @Entity({ synchronize: false })
 export class Product {

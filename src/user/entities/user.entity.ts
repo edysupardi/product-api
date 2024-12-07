@@ -7,8 +7,8 @@ import {
   OneToMany,
   DeleteDateColumn,
 } from 'typeorm';
-import { Role } from 'src/role/entities/role.entity';
-import { Rating } from 'src/rating/entities/rating.entity';
+import { Role } from '../../role/entities/role.entity';
+import { Rating } from '../../rating/entities/rating.entity';
 
 @Entity()
 export class User {

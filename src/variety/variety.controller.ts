@@ -1,8 +1,8 @@
 import { Controller, Get, Post, Body, UseGuards, Query } from '@nestjs/common';
 import { VarietyService } from './variety.service';
-import { Roles } from 'src/common/decorators/roles.decorator';
-import { RoleGuard } from 'src/common/guards/role.guard';
-import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
+import { Roles } from '../common/decorators/roles.decorator';
+import { RoleGuard } from '../common/guards/role.guard';
+import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 
 @Controller('varieties')
 @UseGuards(JwtAuthGuard, RoleGuard)

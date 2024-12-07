@@ -11,9 +11,9 @@ import {
   Put,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
-import { Roles } from 'src/common/decorators/roles.decorator';
-import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
-import { RoleGuard } from 'src/common/guards/role.guard';
+import { Roles } from '../common/decorators/roles.decorator';
+import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
+import { RoleGuard } from '../common/guards/role.guard';
 
 @Controller('products')
 @UseGuards(JwtAuthGuard, RoleGuard)

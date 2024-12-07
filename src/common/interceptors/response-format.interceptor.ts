@@ -25,14 +25,23 @@ export class ResponseFormatInterceptor<T> implements NestInterceptor {
         data,
       })),
       catchError((error: any) => {
-        const response = error.getResponse();
-        const status = error.getStatus();
-        const message = typeof response === 'object' && 'message' in response ? response['message'] : response;
+        // Jika error adalah instance dari HttpException, ambil status dan pesan
+        if (error instanceof HttpException) {
+          const response = error.getResponse();
+          const status = error.getStatus();
+          const message = typeof response === 'object' && 'message' in response ? response['message'] : response;
 
+          return throwError(() => ({
+            status: 'error',
+            message: message,
+            statusCode: status, // Anda juga bisa mengembalikan status code jika diperlukan
+          }));
+        }
+
+        // Untuk error lainnya, kembalikan pesan default
         return throwError(() => ({
           status: 'error',
-          message: message,
-          statusCode: status,
+          message: error.message || 'Internal server error',
         }));
       }),
     );
