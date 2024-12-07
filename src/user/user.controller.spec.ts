@@ -56,8 +56,9 @@ describe('UserController', () => {
 
   describe('create', () => {
     it('should create a new user', async () => {
+      const password = process.env.TEST_USER_PASSWORD || 'defaultPassword';
       const createUserDto: CreateUserDto = {
-        username: 'useradmin', password: 'sB5VC84uZ|6h',
+        username: 'useradmin', password: password,
         email: '',
         roleId: 0
       };
