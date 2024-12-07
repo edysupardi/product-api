@@ -5,13 +5,13 @@ FROM node:18-alpine
 WORKDIR /app
 
 # Salin package.json dan package-lock.json
-# COPY package*.json ./
+COPY package*.json ./
 
 # Install dependencies
 
 # Salin seluruh project ke container
-COPY . .
 RUN npm install
+COPY . .
 
 # Build aplikasi
 RUN npm run build
@@ -21,4 +21,4 @@ EXPOSE 3001
 
 # Jalankan aplikasi
 # CMD ["npm", "run", "start:dev"]
-CMD ["node", "dist/main.js"]
+CMD ["node", "--max-old-space-size=512", "dist/main.js"]
