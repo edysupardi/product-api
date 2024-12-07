@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { ExecutionContext, CanActivate } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Reflector } from '@nestjs/core';
-import { JwtPayload } from 'src/auth/jwt-payload.interface'; // Pastikan Anda sudah memiliki interface untuk JWT Payload
-import { UserService } from 'src/user/user.service';
+import { JwtPayload } from '../../auth/jwt-payload.interface'; // Pastikan Anda sudah memiliki interface untuk JWT Payload
+import { UserService } from '../../user/user.service';
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
