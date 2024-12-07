@@ -60,7 +60,7 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > private_key
           chmod 600 private_key
           
-          ssh -i private_key $VPS_USER@$VPS_HOST << 'EOF'
+          ssh -i private_key $VPS_USER@$VPS_HOST << EOF
             # Navigasi ke direktori proyek
             cd $VPS_PATH
 
