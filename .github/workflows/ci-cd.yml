@@ -29,6 +29,7 @@ jobs:
 
       - name: Build Docker image
         run: |
+          export DOCKER_BUILDKIT=1
           docker build -t edysupardi18/product-api:latest .
 
       - name: Push Docker image
