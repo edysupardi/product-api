@@ -49,6 +49,7 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           VPS_USER: ${{ secrets.VPS_USER }}
           VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_PATH: ${{ secrets.VPS_PATH }}
         run: |
           # Membuat direktori .ssh jika belum ada
           mkdir -p ~/.ssh
@@ -60,6 +61,9 @@ jobs:
           chmod 600 private_key
           
           ssh -i private_key $VPS_USER@$VPS_HOST << 'EOF'
+            # Navigasi ke direktori proyek
+            cd $VPS_PATH
+
             # Tarik image terbaru
             docker pull edysupardi18/product-api:latest
             
