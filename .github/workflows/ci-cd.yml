@@ -29,6 +29,13 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/product-api:latest
 
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
+
       - name: Deploy to VPS
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "docker pull ${{ secrets.DOCKER_USERNAME }}/product-api:latest && docker run -d --name product-app --env-file ${{ secrets.VPS_PATH }}/.env -p \${PORT}:\${PORT} ${{ secrets.DOCKER_USERNAME }}/product-api:latest"
