@@ -38,6 +38,6 @@ jobs:
 
       - name: Deploy to VPS
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "docker pull ${{ secrets.DOCKER_USERNAME }}/product-api:latest && docker run -d --name product-app --env-file ${{ secrets.VPS_PATH }}/.env -p \${PORT}:\${PORT} ${{ secrets.DOCKER_USERNAME }}/product-api:latest"
+          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "docker pull ${{ secrets.DOCKER_USERNAME }}/product-api:latest; docker ps -q -f name=product-app | grep -q . && docker stop product-app && docker rm product-app; docker run -d --name product-app --env-file ${{ secrets.VPS_PATH }}/.env -p 3001:3001 --restart always --network product_network ${{ secrets.DOCKER_USERNAME }}/product-api:latest"
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
