@@ -34,5 +34,8 @@ RUN npm install --only=production
 # Expose port aplikasi
 EXPOSE 3001
 
+# Salin file docker-compose.yml ke dalam image
+COPY docker-compose.yml ./
+
 # Jalankan aplikasi
 CMD ["node", "--max-old-space-size=512", "dist/main.js"]
