@@ -29,6 +29,10 @@ export class Product {
   @JoinColumn({ name: 'variety_id' })
   variety: Variety;
 
+  // add product stock field
+  @Column({ default: 0 })
+  stock: number;
+
   @Column({ name: 'created_at', type: 'timestamp', nullable: false })
   createdAt: Date;
 
@@ -45,7 +49,12 @@ export class Product {
   @JoinColumn({ name: 'updated_by' })
   updatedBy: User;
 
-  @DeleteDateColumn({ name: 'deleted_at', type: 'timestamp', nullable: true, select: false, })
+  @DeleteDateColumn({
+    name: 'deleted_at',
+    type: 'timestamp',
+    nullable: true,
+    select: false,
+  })
   deletedAt: Date;
 
   @ManyToOne(() => User)

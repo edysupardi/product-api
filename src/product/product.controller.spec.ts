@@ -3,10 +3,10 @@ import { ProductController } from './product.controller';
 import { ProductService } from './product.service';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { RoleGuard } from '../common/guards/role.guard';
-import { Roles } from '../common/decorators/roles.decorator';
 
 describe('ProductController', () => {
   let productController: ProductController;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let productService: ProductService;
 
   const mockProductService = {
@@ -21,7 +21,10 @@ describe('ProductController', () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [ProductController],
       providers: [
-        { provide: ProductService, useValue: mockProductService },
+        {
+          provide: ProductService,
+          useValue: mockProductService,
+        },
       ],
     })
       .overrideGuard(JwtAuthGuard) // Mocking guards
@@ -41,7 +44,12 @@ describe('ProductController', () => {
 
       const response = await productController.findAll('10', '0', 'id', 'ASC');
       expect(response).toEqual(result);
-      expect(mockProductService.findAll).toHaveBeenCalledWith(10, 0, 'id', 'ASC');
+      expect(mockProductService.findAll).toHaveBeenCalledWith(
+        10,
+        0,
+        'id',
+        'ASC',
+      );
     });
   });
 
@@ -64,7 +72,10 @@ describe('ProductController', () => {
 
       const response = await productController.create(productData, request);
       expect(response).toEqual(productData);
-      expect(mockProductService.create).toHaveBeenCalledWith(productData, request);
+      expect(mockProductService.create).toHaveBeenCalledWith(
+        productData,
+        request,
+      );
     });
   });
 
@@ -76,7 +87,11 @@ describe('ProductController', () => {
 
       const response = await productController.update(1, productData, request);
       expect(response).toEqual(productData);
-      expect(mockProductService.update).toHaveBeenCalledWith(1, productData, request);
+      expect(mockProductService.update).toHaveBeenCalledWith(
+        1,
+        productData,
+        request,
+      );
     });
   });
 

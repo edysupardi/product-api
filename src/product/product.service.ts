@@ -46,7 +46,11 @@ export class ProductService {
       updatedAt: date,
       updatedBy: userId,
     });
-    return await this.productRepository.save(product);
+
+    const saveProduct = await this.productRepository.save(product);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { deletedAt, deletedBy, ...response } = saveProduct;
+    return response;
   }
 
   async update(id: number, productData: UpdateProductDto, @Request() request) {

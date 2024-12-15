@@ -15,7 +15,9 @@ export class CreateProductDto {
   @IsInt()
   varietyId: number;
 
-  // Tidak ada field rating di sini
+  @IsNotEmpty()
+  @IsInt()
+  stock: number;
 }
 
 export class UpdateProductDto {
@@ -26,11 +28,14 @@ export class UpdateProductDto {
   description?: string;
 
   @IsOptional()
-  price?: number;
+  @IsDecimal({ decimal_digits: '0,2' }) // Validasi untuk harga
+  price: number;
 
   @IsNotEmpty()
   @IsInt()
   varietyId?: number;
 
-  // Tidak ada field rating di sini
+  @IsNotEmpty()
+  @IsInt()
+  stock: number;
 }
